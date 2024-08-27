@@ -126,14 +126,21 @@ public:
         if(head->next == nullptr) {
             return;
         }
-        // ordenar los dos primeros elementos
-        if(head->data > head->next->data){
-            head->next->next = head;
-            head = head->next;
-            head->next->next = nullptr;
+        // dos elementos
+        if(head->next->next == nullptr) {
+            if(head->data > head->next->data){
+                Node<T>* temp = head->next;
+                head->next = temp->next;
+                temp->next = head;
+                head = temp;
+            }
+            return;
         }
-        // ordenar los demas elementos
-        //TODO: mejorar el algoritmo
+        // ordenar
+        Node<T>* dummyNode = new Node<T>();
+        dummyNode->data = T();
+        dummyNode->next = head;
+        head = dummyNode;
         Node<T>* temp = head;
         while(temp->next->next != nullptr){
             if(temp->next->data > temp->next->next->data){
@@ -145,7 +152,15 @@ public:
             }else{
                 temp = temp->next;
             }
+            cout << "Lista: ";
+            Node<T>* current = head;
+            while(current != nullptr){
+                cout << current->data << " ";
+                current = current->next;
+            }
+            cout << "\n";
         }
+        pop_front();
     }
     void reverse(){
         if(head != nullptr){
@@ -202,11 +217,16 @@ int main(){
 
     // test reverse
     List<int> list3;
+    list3.push_front(2);
     list3.push_front(5);
+    list3.push_front(1);
     list3.push_front(4);
     list3.push_front(3);
-    list3.push_front(2);
-    list3.push_front(1);
+    for (int i = 0; i < list3.size(); i++){
+        cout << list3[i] << " ";
+    }
+    cout << "\n";
+    list3.sort();
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
     }
