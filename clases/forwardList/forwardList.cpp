@@ -119,11 +119,7 @@ public:
     }
     void sort(){
         // cero elementos
-        if(head == nullptr) {
-            return;
-        }
-        // un elemento
-        if(head->next == nullptr) {
+        if(head == nullptr || head->next == nullptr) {
             return;
         }
         // dos elementos
@@ -142,11 +138,25 @@ public:
         Node<T>* temp = head;
         Node<T>* temp2 = nullptr;
         while (current != nullptr) {
+            bool showSteps = false;
+            if(showSteps == true){ // display
+                Node<T>* display = head;
+                while(display != nullptr){
+                    cout << display->data << " ";
+                    display = display->next;
+                }
+                if (current != nullptr) cout << "current: " << current->data;
+                if (prev != nullptr) cout << " prev: " << prev->data;
+                if (temp2 != nullptr) cout << " temp2: " << temp2->data;
+                cout << endl;
+            }
+
             if (current->data < head->data){ // If less than head put in front
                 temp2 = current->next;
                 current->next = head;
                 prev->next = temp2;
                 head = current;
+                current = temp2;
             }
             else {
                 while(temp->next->data < current->data){
@@ -157,26 +167,14 @@ public:
                     current->next = temp->next;
                     temp->next = current;
                     prev->next = temp2;
+                    current = temp2;
+                }
+                else {
+                    prev = current;
+                    current = current->next;
                 }
             }
-            // display
             temp = head;
-            while(temp != nullptr){
-                cout << temp->data << " ";
-                temp = temp->next;
-            }
-            cout << "current: " << current->data;
-            if (temp2 != nullptr) cout << " temp2: " << temp2->data;
-            cout << endl;
-
-            prev = current;
-            current = current->next;
-            temp = head;
-//            cout << "temp: " << temp->data << endl;
-//            cout << "current: " << current->data << endl;
-//            cout << "prev: " << prev->data << endl;
-//            cout << "head: " << head->data << endl;
-
         }
     }
     void reverse(){
