@@ -137,30 +137,47 @@ public:
             return;
         }
         // ordenar
-        Node<T>* dummyNode = new Node<T>();
-        dummyNode->data = T();
-        dummyNode->next = head;
-        head = dummyNode;
+        Node<T>* current = head->next;
+        Node<T>* prev = head;
         Node<T>* temp = head;
-        while(temp->next->next != nullptr){
-            if(temp->next->data > temp->next->next->data){
-                Node<T>* temp2 = temp->next;
-                temp->next = temp->next->next;
-                temp2->next = temp->next->next;
-                temp->next->next = temp2;
-                temp = head;
-            }else{
+        Node<T>* temp2 = nullptr;
+        while (current != nullptr) {
+            if (current->data < head->data){ // If less than head put in front
+                temp2 = current->next;
+                current->next = head;
+                prev->next = temp2;
+                head = current;
+            }
+            else {
+                while(temp->next->data < current->data){
+                    temp = temp->next;
+                }
+                if(temp->next != current){ // Put in right place
+                    temp2 = current->next;
+                    current->next = temp->next;
+                    temp->next = current;
+                    prev->next = temp2;
+                }
+            }
+            // display
+            temp = head;
+            while(temp != nullptr){
+                cout << temp->data << " ";
                 temp = temp->next;
             }
-            cout << "Lista: ";
-            Node<T>* current = head;
-            while(current != nullptr){
-                cout << current->data << " ";
-                current = current->next;
-            }
-            cout << "\n";
+            cout << "current: " << current->data;
+            if (temp2 != nullptr) cout << " temp2: " << temp2->data;
+            cout << endl;
+
+            prev = current;
+            current = current->next;
+            temp = head;
+//            cout << "temp: " << temp->data << endl;
+//            cout << "current: " << current->data << endl;
+//            cout << "prev: " << prev->data << endl;
+//            cout << "head: " << head->data << endl;
+
         }
-        pop_front();
     }
     void reverse(){
         if(head != nullptr){
@@ -220,11 +237,14 @@ int main(){
     list3.push_front(2);
     list3.push_front(5);
     list3.push_front(1);
+    list3.push_front(6);
+    list3.push_front(7);
     list3.push_front(4);
     list3.push_front(3);
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
     }
+    cout << "\n";
     cout << "\n";
     list3.sort();
     for (int i = 0; i < list3.size(); i++){
