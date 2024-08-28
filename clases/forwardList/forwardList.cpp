@@ -150,7 +150,6 @@ public:
                 if (temp2 != nullptr) cout << " temp2: " << temp2->data;
                 cout << endl;
             }
-
             if (current->data < head->data){ // If less than head put in front
                 temp2 = current->next;
                 current->next = head;
