@@ -122,16 +122,6 @@ public:
         if(head == nullptr || head->next == nullptr) {
             return;
         }
-        // dos elementos
-        if(head->next->next == nullptr) {
-            if(head->data > head->next->data){
-                Node<T>* temp = head->next;
-                head->next = temp->next;
-                temp->next = head;
-                head = temp;
-            }
-            return;
-        }
         // ordenar
         Node<T>* current = head->next;
         Node<T>* prev = head;
@@ -231,24 +221,28 @@ int main(){
 
     // test reverse
     List<int> list3;
-    list3.push_front(2);
     list3.push_front(5);
-    list3.push_front(1);
-    list3.push_front(6);
-    list3.push_front(7);
+    list3.push_front(2);
     list3.push_front(4);
+    list3.push_front(8);
+    list3.push_front(7);
+    list3.push_front(1);
     list3.push_front(3);
+    list3.push_front(9);
+    list3.push_front(6);
+    cout << "original: ";
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
     }
     cout << "\n";
-    cout << "\n";
     list3.sort();
+    cout << "sorted: ";
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
     }
     cout << "\n";
     list3.reverse();
+    cout << "reversed: ";
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
     }
