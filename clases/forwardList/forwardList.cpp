@@ -12,6 +12,35 @@ template <typename T>
 class List {
 private:
     Node<T>* head;
+
+    // Funciones auxiliares de mergesort
+    Node<T>* merge(Node<T>* first, Node<T>* second) {
+        if (!first)
+            return second;
+        if (!second)
+            return first;
+        if (first->data < second->data) {
+            first->next = merge(first->next,second);
+            return first;
+        } else {
+            second->next = merge(first,second->next);
+            return second;
+        }
+    }
+    Node<T>* mergeSort(Node<T>* head) {
+        if (!head || !head->next)
+            return head;
+        Node<T>* slow = head;
+        Node<T>* fast = head->next;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        Node<T>* temp = slow->next;
+        slow->next = NULL;
+        return merge(mergeSort(head), mergeSort(temp));
+    }
+
 public:
     List(){
         head = nullptr;
@@ -117,7 +146,7 @@ public:
             delete temp;
         }
     }
-    void sort(){
+    void sort(){ // propio
         // cero elementos
         if(head == nullptr || head->next == nullptr) {
             return;
@@ -166,6 +195,11 @@ public:
             temp = head;
         }
     }
+
+    void merge() { //
+        head = mergeSort(head);
+    }
+
     void reverse(){
         if(head != nullptr){
             Node<T>* prev = nullptr;
