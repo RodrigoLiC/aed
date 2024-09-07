@@ -146,6 +146,54 @@ public:
         return T();
     }
 
+    void insert(T data, int index) {
+        if (index == 0) {
+            push_front(data);
+        } else {
+            Node<T>* temp = head;
+            for(int i = 0; i < index - 1; i++){
+                if(temp->next == nullptr){
+                    return;
+                }
+                temp = temp->next;
+            }
+            Node<T>* newNode = new Node<T>();
+            newNode->data = data;
+            newNode->next = temp->next;
+            newNode->prev = temp;
+            if (temp->next != nullptr) {
+                temp->next->prev = newNode;
+            }
+            temp->next = newNode;
+            if (tail == temp) {
+                tail = newNode;
+            }
+        }
+    }
+
+    void remove(int index){
+        if (index == 0) {
+            pop_front();
+        } else {
+            Node<T>* temp = head;
+            for(int i = 0; i < index - 1; i++){
+                if(temp->next == nullptr){
+                    return;
+                }
+                temp = temp->next;
+            }
+            Node<T>* toDelete = temp->next;
+            temp->next = toDelete->next;
+            if (toDelete->next != nullptr) {
+                toDelete->next->prev = temp;
+            }
+            if (tail == toDelete) {
+                tail = temp;
+            }
+            delete toDelete;
+        }
+    }
+
     bool empty(){
         return head == nullptr;
     }
@@ -234,17 +282,19 @@ int main(){
     list2.clear();
     cout << list2.size() << endl;
 
-    // test reverse
+    // test reverse, insert, remove, sort
     DoublyLinkedList<int> list3;
     list3.push_front(5);
     list3.push_front(2);
     list3.push_front(4);
     list3.push_front(8);
-    list3.push_front(7);
+    list3.insert(99,7);
+    list3.remove(7);
     list3.push_front(1);
-    list3.push_front(3);
+    list3.insert(5,3);
     list3.push_front(9);
     list3.push_front(6);
+    list3.insert(6, 7);
     cout << "original: ";
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
