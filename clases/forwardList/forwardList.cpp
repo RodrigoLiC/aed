@@ -130,6 +130,46 @@ public:
     bool empty(){
         return head == nullptr;
     }
+
+    void insert(int index, T data){
+        if(index == 0){
+            push_front(data);
+        }else{
+            Node<T>* temp = head;
+            for(int i = 0; i < index - 1; i++){
+                if(temp->next == nullptr){
+                    return;
+                }
+                temp = temp->next;
+            }
+            Node<T>* newNode = new Node<T>();
+            newNode->data = data;
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    void remove(int index){
+        if(head != nullptr){
+            if(index == 0){
+                pop_front();
+            }else{
+                Node<T>* temp = head;
+                for(int i = 0; i < index - 1; i++){
+                    if(temp->next == nullptr){
+                        return;
+                    }
+                    temp = temp->next;
+                }
+                if(temp->next != nullptr){
+                    Node<T>* toDelete = temp->next;
+                    temp->next = toDelete->next;
+                    delete toDelete;
+                }
+            }
+        }
+    }
+
     int size(){
         int count = 0;
         Node<T>* temp = head;
@@ -146,57 +186,8 @@ public:
             delete temp;
         }
     }
-    void sort(){ // propio
-        // cero elementos
-        if(head == nullptr || head->next == nullptr) {
-            return;
-        }
-        // ordenar
-        Node<T>* current = head->next;
-        Node<T>* prev = head;
-        Node<T>* temp = head;
-        Node<T>* temp2 = nullptr;
-        while (current != nullptr) {
-            bool showSteps = false;
-            if(showSteps == true){ // display
-                Node<T>* display = head;
-                while(display != nullptr){
-                    cout << display->data << " ";
-                    display = display->next;
-                }
-                if (current != nullptr) cout << "current: " << current->data;
-                if (prev != nullptr) cout << " prev: " << prev->data;
-                if (temp2 != nullptr) cout << " temp2: " << temp2->data;
-                cout << endl;
-            }
-            if (current->data < head->data){ // If less than head put in front
-                temp2 = current->next;
-                current->next = head;
-                prev->next = temp2;
-                head = current;
-                current = temp2;
-            }
-            else {
-                while(temp->next->data < current->data){
-                    temp = temp->next;
-                }
-                if(temp->next != current){ // Put in right place
-                    temp2 = current->next;
-                    current->next = temp->next;
-                    temp->next = current;
-                    prev->next = temp2;
-                    current = temp2;
-                }
-                else {
-                    prev = current;
-                    current = current->next;
-                }
-            }
-            temp = head;
-        }
-    }
 
-    void merge() { //
+    void sort() {
         head = mergeSort(head);
     }
 
@@ -253,17 +244,20 @@ int main(){
     list2.clear();
     cout << list2.size() << endl;
 
-    // test reverse
+    // test reverse, insert, remove, sort
     List<int> list3;
     list3.push_front(5);
     list3.push_front(2);
     list3.push_front(4);
     list3.push_front(8);
-    list3.push_front(7);
+    list3.insert(99,7);
+    list3.remove(7);
     list3.push_front(1);
-    list3.push_front(3);
+    list3.insert(5,3);
     list3.push_front(9);
     list3.push_front(6);
+    list3.insert(6, 7);
+
     cout << "original: ";
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
@@ -274,6 +268,7 @@ int main(){
     for (int i = 0; i < list3.size(); i++){
         cout << list3[i] << " ";
     }
+
     cout << "\n";
     list3.reverse();
     cout << "reversed: ";
