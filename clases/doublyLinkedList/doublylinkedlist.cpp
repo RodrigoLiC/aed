@@ -15,7 +15,6 @@ private:
     Node<T>* head;
     Node<T>* tail;
 
-    // Funciones auxiliares de mergesort
     Node<T>* merge(Node<T>* first, Node<T>* second) {
         if (!first)
             return second;

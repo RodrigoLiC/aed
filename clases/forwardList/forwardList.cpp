@@ -13,7 +13,6 @@ class List {
 private:
     Node<T>* head;
 
-    // Funciones auxiliares de mergesort
     Node<T>* merge(Node<T>* first, Node<T>* second) {
         if (!first)
             return second;
