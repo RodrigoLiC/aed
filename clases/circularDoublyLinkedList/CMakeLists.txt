@@ -4,3 +4,4 @@ project(forwardList)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(main circulardoublylinkedlist.cpp)
+add_executable(main2 circularDeque.cpp)

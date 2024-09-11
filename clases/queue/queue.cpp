@@ -9,9 +9,9 @@ private:
     int MAX_SIZE;
     int front;
     int rear;
-
+    int count;
 public:
-    Queue(int size) : MAX_SIZE(size), front(0), rear(0) {
+    Queue(int size) : MAX_SIZE(size), front(0), rear(0), count(0) {
         arr = new T[MAX_SIZE];
     }
 
@@ -20,11 +20,11 @@ public:
     }
 
     bool isEmpty() const {
-        return front == rear;
+        return count == 0;
     }
 
     bool isFull() const {
-        return front == (rear + 1) % MAX_SIZE;
+        return count == MAX_SIZE;
     }
 
     void enqueue(T value) {
@@ -33,6 +33,7 @@ public:
         }
         arr[rear] = value;
         rear = (rear + 1) % MAX_SIZE;
+        count++;
     }
 
     T dequeue() {
@@ -41,11 +42,12 @@ public:
         }
         T value = arr[front];
         front = (front + 1) % MAX_SIZE;
+        count--;
         return value;
     }
 
     int size() const {
-        return (rear - front + MAX_SIZE) % MAX_SIZE;
+        return count;
     }
 };
 
