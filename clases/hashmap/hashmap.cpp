@@ -209,74 +209,162 @@ public:
     }
 };
 
+template <typename key_type, typename value_type>
+class Hashmap {
+private:
+    struct Pair {
+        key_type key;
+        value_type value;
 
+        Pair() : key(key_type()), value(value_type()) {}
+        Pair(const key_type& key, const value_type& value) : key(key), value(value) {}
 
+        void setValue(const value_type& newValue) {
+            value = newValue;
+        }
 
+        bool operator==(const Pair& other) const {
+            return (key == other.key) && (value == other.value);
+        }
+        bool operator!=(const Pair& other) const {
+            return !(*this == other);
+        }
+    };
 
+    int MAX_SIZE;
+    float MAX_FACTOR;
+    int MAX_LIST;
+    List<Pair>* arr;
 
-int main(){
-    // test lista vacia
-    List<double> list1;
-    cout << list1.front() << endl;
-    cout << list1.back() << endl;
-    cout << list1.pop_front() << endl;
-    cout << list1.pop_back() << endl;
-    cout << list1[3] << endl;
-    cout << list1.size() << endl;
-    // test push
-    List<string> list2;
-    list2.push_front("front1");
-    list2.push_front("front2");
-    list2.push_back("back1");
-    list2.push_back("back2");
-    cout << list2.front() << endl;
-    cout << list2.back() << endl;
-    // test []
-    cout << "Imprimiendo " <<list2.size() << " elementos:"<< endl;
-    for (int i = 0; i < list2.size(); i++){
-        cout <<"- "<< list2[i] << endl;
+    // Funcion hash para string
+    int hash_function(const string& key) {
+        int hash = 0;
+        int a = 31;
+        for (char c : key) {
+            hash = (hash*a + static_cast<int>(c)) % MAX_SIZE;
+        }
+        return hash;
+    }
+    // Sobrecarga de funcion hash para int
+    int hash_function(int key) {
+        return key % MAX_SIZE;
+    }
+public:
+    Hashmap(int size, float factor, int list){
+        MAX_SIZE = size;
+        arr = new List<Pair>[MAX_SIZE];
+        MAX_FACTOR = factor;
+        MAX_LIST = list;
+    }
+    ~Hashmap(){
+        delete[] arr;
+    }
+    void insert(key_type key, value_type value){
+        int index = hash_function(key);
+        Pair p(key, value);
+        // si la llave ya existe se actualiza el valor
+        Node<Pair>* temp = arr[index].getHead();
+        int nodeCount = 0;
+        while (temp != nullptr) {
+            if (temp->data.key == key) {
+                temp->data.setValue(value);
+                return;
+            }
+            temp = temp->next;
+            nodeCount++;
+            // si la lista es mayor a MAX_LIST se hace rehash
+            if (nodeCount > MAX_LIST) {
+                rehash(MAX_SIZE * 2);
+                insert(key, value);
+                return;
+            }
+        }
+        // si no existe se inserta
+        arr[index].push_back(p);
+    }
+    value_type search(key_type key){
+        int index = hash_function(key);
+        Node<Pair>* temp = arr[index].getHead();
+        while (temp != nullptr) {
+            if (temp->data.key == key) {
+                return temp->data.value;
+            }
+            temp = temp->next;
+        }
+        return value_type();
+    }
+    void remove(key_type key){
+        int index = hash_function(key);
+        Node<Pair>* temp = arr[index].getHead();
+        int i = 0;
+        while (temp != nullptr) {
+            if (temp->data.key == key) {
+                arr[index].remove(i);
+                return;
+            }
+            temp = temp->next;
+            i++;
+        }
+    }
+    void clear(){
+        for (int i = 0; i < MAX_SIZE; i++) {
+            arr[i].clear();
+        }
+    }
+    void rehash(int newSize){
+        List<Pair>* temp = arr;
+        int oldSize = MAX_SIZE;
+        MAX_SIZE = newSize;
+        arr = new List<Pair>[MAX_SIZE];
+        for (int i = 0; i < oldSize; i++) {
+            Node<Pair>* tempNode = temp[i].getHead();
+            while (tempNode != nullptr) {
+                insert(tempNode->data.key, tempNode->data.value);
+                tempNode = tempNode->next;
+            }
+        }
+        delete[] temp;
+        cout << "Se hizo un rehash. Nuevo tamanio: " << newSize << endl;
     }
 
-    // test pop
-    cout << list2.pop_front() << endl;
-    cout << list2.pop_back() << endl;
-    cout << list2.front() << endl;
+    void print(){
+        for (int i = 0; i < MAX_SIZE; i++) {
+            Node<Pair>* temp = arr[i].getHead();
+            cout << i << ": ";
+            while (temp != nullptr) {
+                cout << "(" << temp->data.key << ", " << temp->data.value << ") ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
 
-    // test clear
-    list2.clear();
-    cout << list2.size() << endl;
-
-    // test reverse, insert, remove, sort
-    List<int> list3;
-    list3.push_front(5);
-    list3.push_front(2);
-    list3.push_front(4);
-    list3.push_front(8);
-    list3.insert(99,7);
-    list3.remove(7);
-    list3.push_front(1);
-    list3.insert(5,3);
-    list3.push_front(9);
-    list3.push_front(6);
-    list3.insert(6, 7);
-
-    cout << "original: ";
-    for (int i = 0; i < list3.size(); i++){
-        cout << list3[i] << " ";
     }
-    cout << "\n";
-    list3.sort();
-    cout << "sorted: ";
-    for (int i = 0; i < list3.size(); i++){
-        cout << list3[i] << " ";
+};
+
+
+string generarPalabra(int longitud) {
+    const string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string palabra;
+
+    for (int i = 0; i < longitud; ++i) {
+        int indice = rand() % caracteres.length();
+        palabra += caracteres[indice];
     }
 
-    cout << "\n";
-    list3.reverse();
-    cout << "reversed: ";
-    for (int i = 0; i < list3.size(); i++){
-        cout << list3[i] << " ";
+    return palabra;
+}
+
+int main() {
+    Hashmap<string, int> h(2, 0.75, 4);
+
+    for(int i = 0; i < 100; i++){
+        string word = generarPalabra(rand()%8+1);
+        h.insert(word, rand()%1000);
     }
+
+    h.print();
+
+    cout << h.search("cs");
 
     return 0;
 }

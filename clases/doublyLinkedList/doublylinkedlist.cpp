@@ -242,6 +242,12 @@ public:
             }
         }
     }
+    Node<T> *getHead(){
+        return head;
+    }
+    Node<T> *getTail(){
+        return tail;
+    }
 };
 
 
