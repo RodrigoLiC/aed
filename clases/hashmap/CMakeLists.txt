@@ -4,3 +4,4 @@ project(forwardList)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(main hashmap.cpp)
+add_executable(morse morse.cpp)

@@ -782,8 +782,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/Equipo/Documents/AED/aed/clases/circularDoublyLinkedList/cmake-build-debug",
-		"source" : "C:/Users/Equipo/Documents/AED/aed/clases/circularDoublyLinkedList"
+		"build" : "C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug",
+		"source" : "C:/Users/Equipo/Documents/AED/aed/clases/hashmap"
 	},
 	"version" : 
 	{
