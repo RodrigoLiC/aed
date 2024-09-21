@@ -180,12 +180,7 @@ public:
         }
         return count;
     }
-    void clear(){
-        while(head != nullptr){
-            Node<T>* temp = head;
-            head = head->next;
-            delete temp;
-        }
+    void clear(){}
     }
 
     void sort() {
