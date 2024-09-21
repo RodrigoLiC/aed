@@ -139,6 +139,39 @@ build anagrama.exe: CXX_EXECUTABLE_LINKER__anagrama_Debug CMakeFiles/anagrama.di
   TARGET_IMPLIB = libanagrama.dll.a
   TARGET_PDB = anagrama.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target sudoku
+
+
+#############################################
+# Order-only phony target for sudoku
+
+build cmake_object_order_depends_target_sudoku: phony || CMakeFiles/sudoku.dir
+
+build CMakeFiles/sudoku.dir/sudoku.cpp.obj: CXX_COMPILER__sudoku_unscanned_Debug C$:/Users/Equipo/Documents/AED/aed/clases/hashmap/sudoku.cpp || cmake_object_order_depends_target_sudoku
+  DEP_FILE = CMakeFiles\sudoku.dir\sudoku.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\sudoku.dir
+  OBJECT_FILE_DIR = CMakeFiles\sudoku.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target sudoku
+
+
+#############################################
+# Link the executable sudoku.exe
+
+build sudoku.exe: CXX_EXECUTABLE_LINKER__sudoku_Debug CMakeFiles/sudoku.dir/sudoku.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\sudoku.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = sudoku.exe
+  TARGET_IMPLIB = libsudoku.dll.a
+  TARGET_PDB = sudoku.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -171,6 +204,8 @@ build main: phony main.exe
 
 build morse: phony morse.exe
 
+build sudoku: phony sudoku.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -179,7 +214,7 @@ build morse: phony morse.exe
 #############################################
 # Folder: C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug
 
-build all: phony main.exe morse.exe anagrama.exe
+build all: phony main.exe morse.exe anagrama.exe sudoku.exe
 
 # =============================================================================
 # Built-in targets

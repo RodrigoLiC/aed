@@ -1,5 +1,6 @@
 C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug/CMakeFiles/main.dir
 C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug/CMakeFiles/morse.dir
 C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug/CMakeFiles/anagrama.dir
+C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug/CMakeFiles/sudoku.dir
 C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug/CMakeFiles/rebuild_cache.dir
