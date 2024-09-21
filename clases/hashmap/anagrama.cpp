@@ -1,5 +1,6 @@
 #include <iostream>
 #include <set>
+#include <vector>
 
 using namespace std;
 
@@ -358,11 +359,8 @@ string generateKey(const string& palabra) {
     return resultado;
 }
 
-int main() {
-    Hashmap<string, List<string>> hash(8, 0.75, 4);
-
-    string strs[] = {"eat", "tea", "tan", "ate", "nat", "bat"};
-
+vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    Hashmap<string, List<string>> hash(4, 0.75, 4);
     set<string> key_set;
     for (const string& word : strs) {
         List<string> vect = hash.search(generateKey(word));
@@ -371,22 +369,49 @@ int main() {
         key_set.insert(generateKey(word));
     }
 
-    List<List<string>> result;
+    vector<vector<string>> answer;
     for (const string& key : key_set) {
         List<string> vect = hash.search(key);
-        result.push_front(vect);
+        Node<string>* temp = vect.getHead();
+        vector<string> group;
+        while (temp != nullptr) {
+            group.push_back(temp->data);
+            temp = temp->next;
+        }
+        answer.push_back(group);
     }
 
-    Node<List<string>>* temp = result.getHead();
-    while(temp != nullptr) {
-        Node<string>* anagrams = temp->data.getHead();
-        while (anagrams != nullptr) {
-            cout << anagrams->data << " ";
-            anagrams = anagrams->next;
+    return answer;
+}
+
+
+int main() {
+    vector<string> strs;
+    strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+    groupAnagrams(strs);
+    for (const vector<string>& group : groupAnagrams(strs)) {
+        for (const string& word : group) {
+            cout << word << " ";
         }
         cout << endl;
-        temp = temp->next;
-    }
+    } cout << endl;
 
+    strs = {"a"};
+    groupAnagrams(strs);
+    for (const vector<string>& group : groupAnagrams(strs)) {
+        for (const string& word : group) {
+            cout << word << " ";
+        }
+        cout << endl;
+    } cout << endl;
+
+    strs = {"least", "setal", "slate", "stale", "steal", "stela", "taels", "tales", "teals", "tesla"};
+    groupAnagrams(strs);
+    for (const vector<string>& group : groupAnagrams(strs)) {
+        for (const string& word : group) {
+            cout << word << " ";
+        }
+        cout << endl;
+    } cout << endl;
     return 0;
 }

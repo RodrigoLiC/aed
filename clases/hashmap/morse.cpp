@@ -390,6 +390,5 @@ int main() {
     wordsPtr = test3;
     countUnique(wordsPtr, 4);
 
-
     return 0;
 }
