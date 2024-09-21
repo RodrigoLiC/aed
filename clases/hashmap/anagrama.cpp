@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <set>
 
 using namespace std;
@@ -360,29 +359,33 @@ string generateKey(const string& palabra) {
 }
 
 int main() {
-    Hashmap<string, vector<string>> hash(8, 0.75, 4);
+    Hashmap<string, List<string>> hash(8, 0.75, 4);
 
-    vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+    string strs[] = {"eat", "tea", "tan", "ate", "nat", "bat"};
 
     set<string> key_set;
     for (const string& word : strs) {
-        vector<string> vect = hash.search(generateKey(word));
-        vect.push_back(word);
+        List<string> vect = hash.search(generateKey(word));
+        vect.push_front(word);
         hash.insert(generateKey(word), vect);
         key_set.insert(generateKey(word));
     }
 
-    vector<vector<string>> result;
+    List<List<string>> result;
     for (const string& key : key_set) {
-        vector<string> vect = hash.search(key);
-        result.push_back(vect);
+        List<string> vect = hash.search(key);
+        result.push_front(vect);
     }
 
-    for (const vector<string>& vect : result) {
-        for (const string& word : vect) {
-            cout << word << " ";
+    Node<List<string>>* temp = result.getHead();
+    while(temp != nullptr) {
+        Node<string>* anagrams = temp->data.getHead();
+        while (anagrams != nullptr) {
+            cout << anagrams->data << " ";
+            anagrams = anagrams->next;
         }
         cout << endl;
+        temp = temp->next;
     }
 
     return 0;
