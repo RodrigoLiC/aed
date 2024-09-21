@@ -36,7 +36,7 @@ private:
             fast = fast->next->next;
         }
         Node<T>* temp = slow->next;
-        slow->next = NULL;
+        slow->next = nullptr;
         return merge(mergeSort(head), mergeSort(temp));
     }
 
@@ -73,7 +73,7 @@ public:
         Node<T>* newNode = new Node<T>();
         newNode->data = data;
         newNode->next = nullptr;
-        if(head == nullptr){
+        if(!head){
             head = newNode;
         }else{
             Node<T>* temp = head;
@@ -84,32 +84,31 @@ public:
         }
     }
     T pop_front(){
-        if(head != nullptr){
+        if(head){
             Node<T>* temp = head;
             head = head->next;
-            T data = temp->data;
+            T data = head->data;
             delete temp;
             return data;
         }
         return T();
     }
     T pop_back(){
-        if(head != nullptr){
-            if(head->next == nullptr){
-                T data = head->data;
-                delete head;
-                head = nullptr;
-                return data;
-            }else{
-                Node<T>* temp = head;
-                while(temp->next->next != nullptr){
-                    temp = temp->next;
-                }
-                T data = temp->next->data;
-                delete temp->next;
-                temp->next = nullptr;
-                return data;
+        if(head){
+            Node<T>* temp = head;
+            Node<T>* prev = nullptr;
+            while(temp->next != nullptr){
+                prev = temp;
+                temp = temp->next;
             }
+            if(prev){
+                prev->next = nullptr;
+            }else{
+                head = nullptr;
+            }
+            T data = temp->data;
+            delete temp;
+            return data;
         }
         return T();
     }
@@ -126,10 +125,9 @@ public:
         }
         return T();
     }
-    bool empty(){
+    bool isEmpty(){
         return head == nullptr;
     }
-
     void insert(int index, T data){
         if(index == 0){
             push_front(data);
@@ -147,7 +145,6 @@ public:
             temp->next = newNode;
         }
     }
-
     void remove(int index){
         if(head != nullptr){
             if(index == 0){
@@ -168,7 +165,6 @@ public:
             }
         }
     }
-
     int size(){
         int count = 0;
         Node<T>* temp = head;
@@ -185,11 +181,9 @@ public:
             delete temp;
         }
     }
-
     void sort() {
         head = mergeSort(head);
     }
-
     void reverse(){
         if(head != nullptr){
             Node<T>* prev = nullptr;
@@ -206,6 +200,19 @@ public:
     }
     Node<T> *getHead(){
         return head;
+    }
+    friend ostream& operator<<(ostream& os, List<T>& list){
+        Node<T>* temp = list.head;
+        os << "[";
+        while(temp != nullptr){
+            os << temp->data;
+            if (temp->next != nullptr){
+                os << ", ";
+            }
+            temp = temp->next;
+        }
+        os << "]";
+        return os;
     }
 };
 
@@ -261,22 +268,16 @@ int main(){
     list3.insert(6, 7);
 
     cout << "original: ";
-    for (int i = 0; i < list3.size(); i++){
-        cout << list3[i] << " ";
-    }
-    cout << "\n";
+    cout << list3 << endl;
+
     list3.sort();
     cout << "sorted: ";
-    for (int i = 0; i < list3.size(); i++){
-        cout << list3[i] << " ";
-    }
+    cout << list3 << endl;
 
     cout << "\n";
     list3.reverse();
     cout << "reversed: ";
-    for (int i = 0; i < list3.size(); i++){
-        cout << list3[i] << " ";
-    }
+    cout << list3 << endl;
 
     return 0;
 }
