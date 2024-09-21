@@ -172,6 +172,39 @@ build sudoku.exe: CXX_EXECUTABLE_LINKER__sudoku_Debug CMakeFiles/sudoku.dir/sudo
   TARGET_IMPLIB = libsudoku.dll.a
   TARGET_PDB = sudoku.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target sudoku2
+
+
+#############################################
+# Order-only phony target for sudoku2
+
+build cmake_object_order_depends_target_sudoku2: phony || CMakeFiles/sudoku2.dir
+
+build CMakeFiles/sudoku2.dir/sudoku2.cpp.obj: CXX_COMPILER__sudoku2_unscanned_Debug C$:/Users/Equipo/Documents/AED/aed/clases/hashmap/sudoku2.cpp || cmake_object_order_depends_target_sudoku2
+  DEP_FILE = CMakeFiles\sudoku2.dir\sudoku2.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\sudoku2.dir
+  OBJECT_FILE_DIR = CMakeFiles\sudoku2.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target sudoku2
+
+
+#############################################
+# Link the executable sudoku2.exe
+
+build sudoku2.exe: CXX_EXECUTABLE_LINKER__sudoku2_Debug CMakeFiles/sudoku2.dir/sudoku2.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\sudoku2.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = sudoku2.exe
+  TARGET_IMPLIB = libsudoku2.dll.a
+  TARGET_PDB = sudoku2.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -206,6 +239,8 @@ build morse: phony morse.exe
 
 build sudoku: phony sudoku.exe
 
+build sudoku2: phony sudoku2.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -214,7 +249,7 @@ build sudoku: phony sudoku.exe
 #############################################
 # Folder: C:/Users/Equipo/Documents/AED/aed/clases/hashmap/cmake-build-debug
 
-build all: phony main.exe morse.exe anagrama.exe sudoku.exe
+build all: phony main.exe morse.exe anagrama.exe sudoku.exe sudoku2.exe
 
 # =============================================================================
 # Built-in targets
