@@ -95,6 +95,15 @@ private:
         return 1 + max(left, right);
     }
 
+    int auxIsBalanced(Node* node){
+        if (node == nullptr) return 0;
+        int left = auxIsBalanced(node->left);
+        int right = auxIsBalanced(node->right);
+        if (left == -1 || right == -1) return -1;
+        if (abs(left - right) > 1) return -1;
+        return 1 + max(left, right);
+    }
+
     void preOrder(Node* node) const {
         if (node == nullptr) return;
         cout << node->data << " ";
@@ -175,6 +184,10 @@ public:
 
     int height() {
         return auxHeight(root);
+    }
+
+    bool isBalanced() {
+        return (auxIsBalanced(root) >= 0);
     }
 
     void preOrderTraversal() const {
