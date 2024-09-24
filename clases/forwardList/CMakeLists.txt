@@ -4,3 +4,4 @@ project(forwardList)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(main forwardList.cpp)
+add_executable(main2 forwardList-v2.cpp)

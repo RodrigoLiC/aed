@@ -305,7 +305,7 @@ public:
     }
     void clear(){
         for (int i = 0; i < MAX_SIZE; i++) {
-            arr[i].clear();
+            arr[i];
         }
     }
     void rehash(int newSize){

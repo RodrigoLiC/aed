@@ -73,6 +73,39 @@ build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/forwardLis
   TARGET_IMPLIB = libmain.dll.a
   TARGET_PDB = main.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target main2
+
+
+#############################################
+# Order-only phony target for main2
+
+build cmake_object_order_depends_target_main2: phony || CMakeFiles/main2.dir
+
+build CMakeFiles/main2.dir/forwardList-v2.cpp.obj: CXX_COMPILER__main2_unscanned_Debug C$:/Users/Equipo/Documents/AED/aed/clases/forwardList/forwardList-v2.cpp || cmake_object_order_depends_target_main2
+  DEP_FILE = CMakeFiles\main2.dir\forwardList-v2.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\main2.dir
+  OBJECT_FILE_DIR = CMakeFiles\main2.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target main2
+
+
+#############################################
+# Link the executable main2.exe
+
+build main2.exe: CXX_EXECUTABLE_LINKER__main2_Debug CMakeFiles/main2.dir/forwardList-v2.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\main2.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = main2.exe
+  TARGET_IMPLIB = libmain2.dll.a
+  TARGET_PDB = main2.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -101,6 +134,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build main: phony main.exe
 
+build main2: phony main2.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -109,7 +144,7 @@ build main: phony main.exe
 #############################################
 # Folder: C:/Users/Equipo/Documents/AED/aed/clases/forwardList/cmake-build-debug
 
-build all: phony main.exe
+build all: phony main.exe main2.exe
 
 # =============================================================================
 # Built-in targets
