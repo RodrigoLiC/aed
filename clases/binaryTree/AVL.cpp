@@ -16,21 +16,17 @@ private:
 
     Node* root;
 
+    int getHeightIfExists(Node* node) {
+        if (node == nullptr) return -1;
+        return node->height;
+    }
+
     Node* leftRotation(Node* node) {
         Node* temp = node->right;
         node->right = temp->left;
         temp->left = node;
-        int node_left_height;
-        int node_right_height;
-        int temp_left_height;
-        int temp_right_height;
-        if(node->left){ node_left_height = node->left->height;} else { node_left_height = -1;}
-        if(node->right){ node_right_height = node->right->height;} else { node_right_height = -1;}
-        if(temp->left){temp_left_height = temp->left->height;} else { temp_left_height = -1;}
-        if(temp->right){temp_right_height = temp->right->height;} else { temp_right_height = -1;}
-
-        node->height = 1 + max(node_left_height, node_right_height);
-        temp->height = 1 + max(temp_left_height, temp_right_height);
+        node->height = 1 + max(getHeightIfExists(node->left), getHeightIfExists(node->right));
+        temp->height = 1 + max(getHeightIfExists(temp->left), getHeightIfExists(temp->right));
         return temp;
     }
 
@@ -38,33 +34,16 @@ private:
         Node* temp = node->left;
         node->left = temp->right;
         temp->right = node;
-        int node_left_height;
-        int node_right_height;
-        int temp_left_height;
-        int temp_right_height;
-        if(node->left){ node_left_height = node->left->height;} else { node_left_height = -1;}
-        if(node->right){ node_right_height = node->right->height;} else { node_right_height = -1;}
-        if(temp->left){temp_left_height = temp->left->height;} else { temp_left_height = -1;}
-        if(temp->right){temp_right_height = temp->right->height;} else { temp_right_height = -1;}
-
-        node->height = 1 + max(node_left_height, node_right_height);
-        temp->height = 1 + max(temp_left_height, temp_right_height);
+        node->height = 1 + max(getHeightIfExists(node->left), getHeightIfExists(node->right));
+        temp->height = 1 + max(getHeightIfExists(temp->left), getHeightIfExists(temp->right));
         return temp;
     }
 
     Node* auxBalance(Node* node) {
-        int node_left_height;
-        int node_right_height;
-        if(node->left){ node_left_height = node->left->height;} else { node_left_height = -1;}
-        if(node->right){ node_right_height = node->right->height;} else { node_right_height = -1;}
-        if (node_left_height - node_right_height > 1) {
+        if (getHeightIfExists(node->left) - getHeightIfExists(node->right) > 1) {
             cout << node->data << "\n";
-            int node_left_left_height;
-            int node_left_right_height;
-            if(node->left->left){ node_left_left_height = node->left->left->height;} else { node_left_left_height = -1;}
-            if(node->left->right){ node_left_right_height = node->left->right->height;} else { node_left_right_height = -1;}
-            if (node_left_left_height >= node_left_right_height) {
-                // right rotation
+            if (getHeightIfExists(node->left->left) >= getHeightIfExists(node->left->right)) {
+                // right
                 node = rightRotation(node);
             } else {
                 // left right
@@ -72,12 +51,8 @@ private:
                 node = rightRotation(node);
             }
         }
-        if (node_right_height - node_left_height > 1) {
-            int node_right_left_height;
-            int node_right_right_height;
-            if(node->right->left){ node_right_left_height = node->right->left->height;} else { node_right_left_height = -1;}
-            if(node->right->right){ node_right_right_height = node->right->right->height;} else { node_right_right_height = -1;}
-            if (node_right_right_height >= node_right_left_height) {
+        if (getHeightIfExists(node->right) - getHeightIfExists(node->left) > 1) {
+            if (getHeightIfExists(node->right->right) >= getHeightIfExists(node->right->left)) {
                 // left rotation
                 node = leftRotation(node);
             } else {
@@ -107,11 +82,7 @@ private:
         // Balancear
         node = auxBalance(node);
         // Actualizar altura
-        int node_left_height;
-        int node_right_height;
-        if(node->left){ node_left_height = node->left->height;} else { node_left_height = -1;}
-        if(node->right){ node_right_height = node->right->height;} else { node_right_height = -1;}
-        node->height = 1 + max(node_left_height, node_right_height);
+        node->height = 1 + max(getHeightIfExists(node->left), getHeightIfExists(node->right));
         return node;
     }
 
@@ -150,12 +121,15 @@ private:
                 }
                 if (temp_parent == current) {
                     temp->right = current->right;
+                    temp->height = max(temp->height-1, getHeightIfExists(temp->right)) + 1;
                     delete current;
                     return temp;
                 } else {
                     temp_parent->right = temp->left;
                     temp->left = current->left;
                     temp->right = current->right;
+                    temp_parent->height = max(getHeightIfExists(temp_parent->left), getHeightIfExists(temp_parent->right)) + 1;
+                    temp->height = max(getHeightIfExists(temp->left), getHeightIfExists(temp->right)) + 1;
                     delete current;
                     return temp;
                 }
