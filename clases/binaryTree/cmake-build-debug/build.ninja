@@ -73,6 +73,39 @@ build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/binaryTree
   TARGET_IMPLIB = libmain.dll.a
   TARGET_PDB = main.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target avl
+
+
+#############################################
+# Order-only phony target for avl
+
+build cmake_object_order_depends_target_avl: phony || CMakeFiles/avl.dir
+
+build CMakeFiles/avl.dir/AVL.cpp.obj: CXX_COMPILER__avl_unscanned_Debug C$:/Users/Equipo/Documents/AED/aed/clases/binaryTree/AVL.cpp || cmake_object_order_depends_target_avl
+  DEP_FILE = CMakeFiles\avl.dir\AVL.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\avl.dir
+  OBJECT_FILE_DIR = CMakeFiles\avl.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target avl
+
+
+#############################################
+# Link the executable avl.exe
+
+build avl.exe: CXX_EXECUTABLE_LINKER__avl_Debug CMakeFiles/avl.dir/AVL.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\avl.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = avl.exe
+  TARGET_IMPLIB = libavl.dll.a
+  TARGET_PDB = avl.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -99,6 +132,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build avl: phony avl.exe
+
 build main: phony main.exe
 
 # =============================================================================
@@ -109,7 +144,7 @@ build main: phony main.exe
 #############################################
 # Folder: C:/Users/Equipo/Documents/AED/aed/clases/binaryTree/cmake-build-debug
 
-build all: phony main.exe
+build all: phony main.exe avl.exe
 
 # =============================================================================
 # Built-in targets
