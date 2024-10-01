@@ -185,9 +185,9 @@ private:
     void drawCurrentDepth(Node* node, int depth, int spaces) {
         if (node == nullptr) {
             if (depth == 0) {
-                for (int i = 0; i < spaces; i++) cout << " ";
+                for (int i = 0; i < spaces; i++) cout << "  ";
                 cout << "X(-1)";
-                for (int i = 0; i < spaces + 1; i++) cout << " ";
+                for (int i = 0; i < spaces + 1; i++) cout << "  ";
                 return;
             }
             drawCurrentDepth(nullptr, depth - 1, spaces);
@@ -195,9 +195,9 @@ private:
             return;
         }
         if (depth == 0) {
-            for (int i = 0; i < spaces; i++) cout << " ";
+            for (int i = 0; i < spaces; i++) cout << "  ";
             cout << node->data << "(" << node->height << ")";
-            for (int i = 0; i < spaces + 1; i++) cout << " ";
+            for (int i = 0; i < spaces + 1; i++) cout << "  ";
             return;
         }
         drawCurrentDepth(node->left, depth - 1, spaces);
