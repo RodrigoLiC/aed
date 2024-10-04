@@ -2,6 +2,10 @@
 
 using namespace std;
 
+string indent(int level) {
+    return string(level * 4, ' ');
+}
+
 struct Voxel {
     int r, g, b;
 };
@@ -53,24 +57,21 @@ struct OctreeNode {
         children[index]->insert(voxel, x, y, z, depth-1, mid);
     }
 
-    void print(double x, double y, double z, double size){
+    void print(double x, double y, double z, double size, int indent_level){
         double mid = size / 2;
-
+        cout << indent(indent_level) << "Nodo(" << x << ", " << y << ", " << z << ", " << x + size << ", " << y + size << ", " << z + size << ") = ";
         if (isLeaf) {
-            cout << "Voxel en rango ";
-            cout << "(" << x << ", " << y << ", " << z << ") - (" << x + size << ", " << y + size << ", " << z + size << ")";
+            cout << "("<< voxelData.r << ", " << voxelData.g << ", " << voxelData.b << ")\n";
             return;
         }
 
-        cout << "Nodo con rango";
-        cout << " (" << x << ", " << y << ", " << z << ") - (" << x + size << ", " << y + size << ", " << z + size << ")";
-        cout << " { ";
+        cout << "{\n";
         for (int i = 0; i < CHILDREN_LENGTH; i++) {
             if (children[i] != nullptr) {
-                children[i]->print(x + (i & 1) * mid, y + (i & 2)/2 * mid, z + (i & 4)/4 * mid, mid);
+                children[i]->print(x + (i & 1) * mid, y + (i & 2)/2 * mid, z + (i & 4)/4 * mid, mid, indent_level + 1);
             }
         }
-        cout << " } ";
+        cout << indent(indent_level) <<"}\n";
     }
 
     void clear() {
@@ -97,7 +98,9 @@ public:
     }
 
     void print(){
-        root.print(0, 0, 0, size);
+        cout << "{\n";
+        root.print(0, 0, 0, size, 1);
+        cout << "}" << endl;
     }
 
     void clear() {
@@ -106,9 +109,13 @@ public:
 };
 
 int main() {
-    Octree oct(32, 8);
+    Octree oct(32, 5);
     Voxel redVoxel = {255, 0, 0};
     oct.insert(redVoxel, 10, 10, 10);
+    oct.insert(redVoxel, 10, 10, 11);
+    oct.insert(redVoxel, 30, 1, 5);
+    oct.insert(redVoxel, 12, 15, 13);
+    oct.insert(redVoxel, 22, 24, 12);
     oct.print();
     oct.clear();
     return 0;
