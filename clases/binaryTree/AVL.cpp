@@ -321,6 +321,5 @@ int main() {
         }
         cout << "insert (i)\t\tremove (r)\t\tsearch (s)\t\theight (h)\t\texit (e)\n";
     }
-
     return 0;
 }
