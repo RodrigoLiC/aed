@@ -22,6 +22,17 @@ private:
     int numVertices;
     vector<vector<Pair>> listaAdyacencia;
 
+    void auxDFS(int vertice, vector<bool>& visitado) {
+        visitado[vertice] = true;
+        cout << vertice << " ";
+
+        for (Pair vecino : listaAdyacencia[vertice]) {
+            if (!visitado[vecino.key]) {
+                auxDFS(vecino.key, visitado);
+            }
+        }
+    }
+
 public:
     Grafo(int vertices, bool dirigido = false) {
         numVertices = vertices;
@@ -43,6 +54,11 @@ public:
         }
     }
 
+    void DFS(int inicio) {
+        vector<bool> visitado(numVertices, false);
+        auxDFS(inicio, visitado);
+    }
+
     void imprimirGrafo() {
         for (int i = 0; i < numVertices; i++) {
             cout << "Vertice " << i << ":";
@@ -55,18 +71,21 @@ public:
 };
 
 int main() {
-    int vertices = 5;
+    int vertices = 6;
     Grafo<float> grafo(vertices, true);
 
-    grafo.agregarArista(0, 1, 2.1);
-    grafo.agregarArista(0, 4,3.3);
-    grafo.agregarArista(1, 2,4.3);
-    grafo.agregarArista(1, 3,2.2);
-    grafo.agregarArista(1, 4,5.6);
-    grafo.agregarArista(2, 3,2.6);
-    grafo.agregarArista(3, 4,1.3);
+    grafo.agregarArista(0, 5,1);
+    grafo.agregarArista(1, 0,1);
+    grafo.agregarArista(1, 2,1);
+    grafo.agregarArista(1, 3,1);
+    grafo.agregarArista(3, 2,1);
+    grafo.agregarArista(2, 4,1);
+    grafo.agregarArista(4, 5,1);
 
     grafo.imprimirGrafo();
+
+    grafo.DFS(0);
+    grafo.DFS(1);
 
     return 0;
 }
