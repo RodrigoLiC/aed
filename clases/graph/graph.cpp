@@ -6,7 +6,6 @@ using namespace std;
 template <typename edgeValueType>
 class Grafo {
 private:
-
     struct Pair {
         int key;
         edgeValueType value;
@@ -17,28 +16,31 @@ private:
         void setValue(const edgeValueType& newValue) {
             value = newValue;
         }
-
-        bool operator==(const Pair& other) const {
-            return (key == other.key) && (value == other.value);
-        }
-        bool operator!=(const Pair& other) const {
-            return !(*this == other);
-        }
     };
 
+    bool isDirected;
     int numVertices;
     vector<vector<Pair>> listaAdyacencia;
 
 public:
-    Grafo(int vertices) {
+    Grafo(int vertices, bool dirigido = false) {
         numVertices = vertices;
-        listaAdyacencia.resize(vertices);
+        isDirected = dirigido;
+        listaAdyacencia.resize(numVertices);
     }
 
-    // no dirigido
     void agregarArista(int origen, int destino, edgeValueType value) {
-        listaAdyacencia[origen].push_back(Pair(destino, value));
-        listaAdyacencia[destino].push_back(Pair(origen, value));
+        if(origen < 0 || origen >= numVertices || destino < 0 || destino >= numVertices) {
+            cout << "Error: Vertices fuera de rango" << endl;
+            return;
+        }
+        if(isDirected){ // Dirigido
+            listaAdyacencia[origen].push_back(Pair(destino, value));
+            return;
+        } else { // No dirigido
+            listaAdyacencia[origen].push_back(Pair(destino, value));
+            listaAdyacencia[destino].push_back(Pair(origen, value));
+        }
     }
 
     void imprimirGrafo() {
@@ -54,7 +56,7 @@ public:
 
 int main() {
     int vertices = 5;
-    Grafo<float> grafo(vertices);
+    Grafo<float> grafo(vertices, true);
 
     grafo.agregarArista(0, 1, 2.1);
     grafo.agregarArista(0, 4,3.3);
